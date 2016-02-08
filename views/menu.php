@@ -11,7 +11,7 @@
 
         <div class="collapse navbar-collapse" id="defaultNavbar">
             <ul class="nav navbar-nav">
-                <li><a href="#">Home</a></li>
+                <li><a href="/index.php">Home</a></li>
                 <li><a href="#">Play</a></li>
                 <li><a href="#">History</a></li>
             </ul>
