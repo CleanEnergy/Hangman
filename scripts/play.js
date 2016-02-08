@@ -1,6 +1,6 @@
 var attempt = {};
 
-var triesLeft = 5;
+var triesLeft = 0;
 function decrementTries() {
     triesLeft--;
     $('#remainingTries')
@@ -23,17 +23,18 @@ $(function () {
         window.location = '/views/index.php';
     }
 
-    $('#remainingTries')
-        .html(triesLeft + ' tries left');
-
     attempt = {
         time: new Date().toLocaleString(),
         word: selectRandomWord(),
         tries: 0,
         foundLetters: 0,
         victory: false,
-        won: function () { return this.foundLetters == this.word.length; }
+        won: function () { return this.foundLetters == (this.word.replace(' ', '').length); }
     };
+
+    triesLeft = attempt.word.length + 5;
+    $('#remainingTries')
+        .html(triesLeft + ' tries left');
 
     displayLetterInputs();
 
@@ -43,11 +44,12 @@ $(function () {
         // Display
         for (var i = 0; i < attempt.word.length; i++) {
             if (attempt.word[i] == ' ') {
-                continue;
+                $placeholder
+                    .append('<li><input type="text" class="input" style="text-align:center; margin-bottom: 5px;" disabled/></li>');
+            } else {
+                $placeholder
+                   .append('<li><input type="text" class="input" style="text-align:center; margin-bottom: 5px;" data-index="' + i + '"/></li>');
             }
-
-            $placeholder
-                .append('<li><input type="text" style="text-align:center;" data-index="' + i + '"/></li>');
         }
 
         // Bind logic
@@ -65,9 +67,9 @@ $(function () {
                     $(this)
                         .css('background-color', 'lime')
                         .attr('disabled', true);
-                } 
-                
-                if(attempt.won()){
+                }
+
+                if (attempt.won()) {
                     // Victory
                     alert('Victory!');
                     saveResults();
