@@ -27,10 +27,11 @@ $(function () {
         .html(triesLeft + ' tries left');
 
     attempt = {
-        time: new Date().toLocaleDateString(),
+        time: new Date().toLocaleString(),
         word: selectRandomWord(),
         tries: 0,
         foundLetters: 0,
+        victory: false,
         won: function () { return this.foundLetters == this.word.length; }
     };
 
@@ -64,24 +65,21 @@ $(function () {
                     $(this)
                         .css('background-color', 'lime')
                         .attr('disabled', true);
-                } else {
-
+                } 
+                
+                if(attempt.won()){
                     // Victory
-                    if (attempt.won()) {
-                        alert('Victory!');
-                        saveResults();
-                        window.location = '/views/history.php';
-                    }
-
+                    alert('Victory!');
+                    saveResults();
+                    window.location = '/views/history.php';
+                } else if (triesLeft === 0) {
                     // Incorrect letter
-                    if (triesLeft === 0) {
-                        alert('Game over!');
-                        saveResults();
-                        window.location = '/views/history.php';
-                    }
+                    alert('Game over!');
+                    saveResults();
+                    window.location = '/views/history.php';
                 }
 
-                
+
             });
     }
 
@@ -98,6 +96,7 @@ $(function () {
             history = JSON.parse(history);
         }
 
+        attempt.victory = attempt.won();
         history.push(attempt);
         localStorage.setItem('history', JSON.stringify(history));
     }
