@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8" />
         <title>Hangman</title>
-        <link rel="stylesheet" href="/css/bootstrap.min.css"></link>
+        <?php include "_styles.php"?>
     </head>
     <body>
         <?php include "menu.php"?>
@@ -20,10 +20,7 @@
             <ul id="existingWords"></ul>
         </div>
 
-        
-        <script src="../js/jquery-2.2.0.min.js"></script>
-        <script src="../js/bootstrap.min.js"></script>
-        <script src="../js/bootstrap.min.js"></script>
+        <?php include "_scripts.php"?>
         <script src="../scripts/index.js"></script>
 
     </body>
